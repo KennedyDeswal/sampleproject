@@ -25,7 +25,7 @@ pipeline{
         }
         stage('dev-clone'){
           
-            steps{git credentialsId: 'githubcred', url: 'https://github.com/KennedyDeswal/sampleproject.git' , branch: "${node_lbl}"}
+            steps{git credentialsId: 'githubcred', url: 'https://github.com/KennedyDeswal/sampleproject.git' , branch: "master"}
         }
 
        stage("SonarQube analysis") {
