@@ -18,7 +18,7 @@ pipeline{
     }
     stage("SonarQube Analysis") {
       steps {
-        sh "/opt/sonar_scanner/bin/sonar-scanner"
+        sh "echo Test"
       }
     }
   }
