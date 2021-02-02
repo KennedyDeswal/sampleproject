@@ -8,17 +8,7 @@ pipeline{
                 }
 
     stages{
-        stage('echo'){
-            steps{
-                script {
-                    commit = checkout scm
-                    println commit.GIT_BRANCH
-                    a = commit.GIT_BRANCH
-                    node_lbl = sh ( script: "echo $a | grep -oP '(?<=origin/).*' ",returnStdout: true ).trim()
-                }
-                sh "echo ${node_lbl}"
-                }
-        }
+       
         stage('dev-cleaning workinf dir'){
         
             steps{sh "sudo rm -rf /var/lib/jenkins/workspace/xyz/*"}
