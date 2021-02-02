@@ -17,9 +17,6 @@ pipeline{
       }
     }
     stage("SonarQube Analysis") {
-      environment {
-        scannerHome = tool 'SonarQubeScanner'
-      }
       steps {
         sh "/opt/sonar_scanner/bin/sonar-scanner"
       }
