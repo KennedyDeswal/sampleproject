@@ -1,35 +1,35 @@
 pipeline{
-    agent any
-    environment{
-                 qg = waitForQualityGate()
-                 jn = "${env.JOB_NAME}"
-                 ws = "${env.WORKSPACE}"
-
-                }
-
-    stages{
-        stage('dev-cleaning workinf dir') {
-            steps{sh "sudo rm -rf /var/lib/jenkins/workspace/xyz/*"}
-        }
-        stage('dev-clone') {
-               steps{git credentialsId: 'githubcred', url: 'https://github.com/KennedyDeswal/sampleproject.git' , branch: "master"}
-        }
-       stage("SonarQube analysis") {
-                steps{
-                  withSonarQubeEnv('SonarQube') {
-                  sh 'cd /var/lib/jenkins/workspace/xyz && /opt/sonar_scanner/bin/sonar-scanner -Dsonar.sources=. -Dsonar.projectKey=project'
-             }
-         }
-      }
-      stage("Quality Gate") {
-                steps{
-                     timeout(time: 1, unit: 'HOURS') {
-                     //if (qg.status != 'OK') {
-                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
-              }
-          }
-      }
-
+  agent any
+  environment {
+    qg = waitForQualityGate()
+    jn = "${env.JOB_NAME}"
+    ws = "${env.WORKSPACE}"
+  }
+  stages {
+    stage('WORKSPACE CleanUP') {
+      steps {
+        sh "sudo rm -rf /var/lib/jenkins/workspace/xyz/*"
       }
     }
+    stage('SCM CheckOut') {
+      steps {
+        git credentialsId: 'githubcred', url: 'https://github.com/KennedyDeswal/sampleproject.git' , branch: "master"
+      }
+    }
+    stage("SonarQube Analysis") {
+      environment {
+        scannerHome = tool 'SonarQubeScanner'
+      }
+      steps {
+        withSonarQubeEnv('sonarqube') {
+          sh "${scannerHome}/bin/sonar-scanner"
+        }
+        timeout(time: 10, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
+  }
+}
+
 
