@@ -16,7 +16,7 @@ pipeline{
         }
        stage("SonarQube analysis") {
                 steps{
-                  withSonarQubeEnv('sonar_scanner') {
+                  withSonarQubeEnv('SonarQube') {
                   sh 'cd /var/lib/jenkins/workspace/xyz && /opt/sonar_scanner/bin/sonar-scanner -Dsonar.sources=. -Dsonar.projectKey=project'
              }
          }
