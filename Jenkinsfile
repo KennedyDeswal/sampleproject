@@ -1,10 +1,5 @@
 pipeline{
   agent any
-  environment {
-    qg = waitForQualityGate()
-    jn = "${env.JOB_NAME}"
-    ws = "${env.WORKSPACE}"
-  }
   stages {
     stage('WORKSPACE CleanUP') {
       steps {
