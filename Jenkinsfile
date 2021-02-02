@@ -8,16 +8,12 @@ pipeline{
                 }
 
     stages{
-       
-        stage('dev-cleaning workinf dir'){
-        
+        stage('dev-cleaning workinf dir') {
             steps{sh "sudo rm -rf /var/lib/jenkins/workspace/xyz/*"}
         }
-        stage('dev-clone'){
-          
-            steps{git credentialsId: 'githubcred', url: 'https://github.com/KennedyDeswal/sampleproject.git' , branch: "master"}
+        stage('dev-clone') {
+               steps{git credentialsId: 'githubcred', url: 'https://github.com/KennedyDeswal/sampleproject.git' , branch: "master"}
         }
-
        stage("SonarQube analysis") {
                 steps{
                   withSonarQubeEnv('sonar_scanner') {
@@ -25,7 +21,7 @@ pipeline{
              }
          }
       }
-      stage("Quality Gate"){
+      stage("Quality Gate") {
                 steps{
                      timeout(time: 1, unit: 'HOURS') {
                      //if (qg.status != 'OK') {
@@ -33,3 +29,7 @@ pipeline{
               }
           }
       }
+
+      }
+    }
+}
