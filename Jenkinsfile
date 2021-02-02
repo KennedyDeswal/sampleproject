@@ -16,9 +16,9 @@ pipeline{
         git credentialsId: 'githubcred', url: 'https://github.com/KennedyDeswal/sampleproject.git' , branch: "master"
       }
     }
-    stage("SonarQube Analysis") {
+    stage("test") {
       steps {
-        sh "echo Test"
+        sh 'echo "Test"'
       }
     }
   }
