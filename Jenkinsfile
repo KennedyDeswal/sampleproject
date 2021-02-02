@@ -16,11 +16,6 @@ pipeline{
         git credentialsId: 'githubcred', url: 'https://github.com/KennedyDeswal/sampleproject.git' , branch: "master"
       }
     }
-    stage("test") {
-      steps {
-        sh 'echo "Test"'
-      }
-    }
   }
 }
 
