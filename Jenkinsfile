@@ -3,7 +3,7 @@ pipeline{
   stages {
     stage('WORKSPACE CleanUP') {
       steps {
-        sh "sudo rm -rf /var/lib/jenkins/workspace/xyz/*"
+        sh "whoami && rm -rf /var/lib/jenkins/workspace/xyz/*"
       }
     }
     stage('SCM CheckOut') {
